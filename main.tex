@@ -1,12 +1,18 @@
 \documentclass[25pt]{tikzposter}
+
+% design based on https://twitter.com/mikemorrison/status/1110191245035479041?lang=en
+% and https://github.com/SimonLarsen/tikzpostersdu
+
 \input{preamble.tex}
 
 \begin{document}
+
 % remove offset that would otherwise be fixed by \maketitle
 \makeatletter
     \setlength{\TP@blocktop}{.47\textheight}
 \makeatother
 
+%% MAIN MESSAGE OF PAPER %%
 \colorlet{blockbodybgcolor}{mDarkTeal}
 \block{}{
   \color{white}{
@@ -23,6 +29,7 @@
 \begin{columns}
   \column{0.7}
   \block{}{
+    %% TITLE OF PAPER %%
     {\Huge\bf Rodent: Relevance determination in ODE \\\\}
     {\Large Niklas Heim, V\'aclav \v Sm\'idl, Tom\'a\v s Pevn\'y} \hfill
     {\Large Czech Technical University, Prague}
@@ -187,6 +194,9 @@
   
 \end{columns}
 
+\begin{columns}
+  
+\column{0.7}
 \block{}{
   \begin{minipage}{.05\textwidth}
     \includegraphics[height=\textwidth]{qr-code.pdf}
@@ -197,15 +207,21 @@
     Or scan the QR code on the left! \\
     Inspired by \texttt{Betterposter by Mike Morrison}
   \end{minipage}
-  \hfill
+}
+\column{0.3}
+\block{}{
+  \centering
   \begin{minipage}{.04\textwidth}
     \includegraphics[height=\textwidth]{aic-logo.png}
   \end{minipage}
   \hspace{.04\textwidth}
-  \begin{minipage}{.04\textwidth}
+  \begin{minipage}{.05\textwidth}
     \includegraphics[height=\textwidth]{cvut-logo.jpeg}
   \end{minipage}
   \hspace{.04\textwidth}
 }
+
+
+\end{columns}
 
 \end{document}

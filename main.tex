@@ -17,10 +17,13 @@
 \block{}{
   \color{white}{
     \fontseries{l}\fontsize{130}{100}\selectfont
-    Learning \textbf{physical concepts}  purely \\\\\\
-    from data: We demonstrate how \\\\\\
-    \textbf{generative models} can learn  \\\\\\
-    \textbf{manifolds} of \textbf{differential equations.}
+    % Learning \textbf{physical concepts}  purely \\\\\\
+    % from data: We demonstrate how \\\\\\
+    % \textbf{generative models} can learn  \\\\\\
+    % \textbf{manifolds} of \textbf{differential equations.}
+    \textbf{Relevance determination} for \\\\\\ \textbf{explainability}.
+    Learning \textbf{manifolds} of \\\\\\ sparse, \textbf{differential
+    equations} from \\\\\\ \textbf{partial observations}.
   }
 }
 \colorlet{blockbodybgcolor}{white}
@@ -108,13 +111,36 @@
     the corresponding encodings for the weights $\bm W$, biases $\bm b$, and
     initial conditions $\bm\xi$. The Rodent reduced
     the latent space to the four truly relevant parameters.
-    \vspace{0.18cm}
   }
+
+\block{}{
+  \begin{minipage}{.05\textwidth}
+    \includegraphics[height=\textwidth]{qr-code.pdf}
+  \end{minipage}
+  \begin{minipage}{.30\textwidth}
+    Check out the full paper at \texttt{http://tiny.cc/f6x6gz}\\
+    or scan the QR code on the left! \\
+    Email \texttt{niklas.heim@aic.fel.cvut.cz}
+  \end{minipage}
+  \begin{minipage}{.04\textwidth}
+    \includegraphics[height=\textwidth]{aic-logo.png}
+  \end{minipage}
+  \hspace{.03\textwidth}
+  \begin{minipage}{.05\textwidth}
+    \includegraphics[height=\textwidth]{avast-logo.png}
+  \end{minipage}
+  \hspace{.01\textwidth}
+  \begin{minipage}{.05\textwidth}
+    \includegraphics[height=\textwidth]{cvut-logo.jpeg}
+  \end{minipage}
+  \hspace{.04\textwidth}
+}
 
   \column{0.3}
   \block{Rodent in depth}{
-    Assume a time series $\X = [\bm x_1, \bm x_2,\ldots, \bm x_K]$ with $\bm x_i
-    \in \mathbb{R}^d$ generated from discrete-time, noisy observations
+    \textbf{Problem definition:} Assume a time series $\X = [\bm x_1, \bm
+    x_2,\ldots, \bm x_K]$ with $\bm x_i \in \mathbb{R}^d$ generated from
+    discrete-time, noisy observations
     \begin{equation}
       \bm x_k = H(\bm{\xi}(\Delta t k)) + e_k,
     \end{equation}
@@ -136,10 +162,10 @@
     \end{align}
     where $\bm{t} = [0, \Delta t, \ldots, K\Delta t]$ and ODE
     solver $\psi$.  Assuming we observe a system with expected order $M$, we choose $N
-    \geq M$.
+    \geq M$.\\
 
-    If ODE state and parameters are combined in $\z=[\bm\theta,\bm\xi(0)]$ the
-    likelihood becomes
+    \textbf{Rodent:} By combining the ODE state and its parameters in
+    $\z=[\bm\theta,\bm\xi(0)]$ we can define the data likelihood as
     \begin{align}
       \label{eq:decoder}
       p(\x|\z) &= \N(\x|H(\psi(\z)),\sigma_x^2).
@@ -156,7 +182,7 @@
       \label{eq:ard_posterior}
       p(\z|\x) = \N(\z|\phi_\omega(\x), \bm{\sigma}_z^2)
     \end{align}
-    where mean $\mz=\phi_\omega(\x)$ is a NN with parameters
+    where mean $\mz=\phi_\omega(\x)$ is a neural net with parameters
     $\omega$.
     The resulting ELBO:
     {\fontsize{25}{20}
@@ -171,14 +197,14 @@
                   \right),
     \end{aligned}
     \end{equation}}
-    \hspace{-.6cm}with gaussian noise $\bm{\epsilon}$, decoder
-    $H(\psi(\bm\theta,\bm\xi(0)))\equiv\phi(\z)$, and $\text{dim}(\z) = m$.
-    The encoder network consists of two parts: (i) A dense net that receives
-    only a few steps of the beginning of the time series, responsible for
-    predicting $\bm \xi(0)$. (ii) A (CNN) that
-    predicts $\bm \theta$.  The CNN averages over the time
-    dimension after the convolutions, which makes it possible to use samples of
-    different length.
+    with Gaussian noise $\bm{\epsilon} \sim \N(0,I)$, decoder
+    $H(\psi(\bm\theta,\bm\xi(0)))\equiv\phi(\z)$, and $\text{dim}(\z) = m$.\\
+
+    \textbf{Encoder:} The encoder $\phi_\omega$ consists of two parts: (i) A
+    dense net that receives only a few steps of the beginning of the time
+    series, responsible for predicting $\bm \xi(0)$. (ii) A (CNN) that predicts
+    $\bm \theta$.  The CNN averages over the time dimension after the
+    convolutions, which makes it possible to use samples of different length.\\
 
     \textbf{Reidentification:} We sample a batch of
     latent codes from the encoder for each input.  The samples
@@ -193,37 +219,10 @@
     those are changing during the optimization with respect to $R$.
     This means that we stay in the identified model manifold, but are able to
     extrapolate far beyond the training range.   
+
+    \vspace{1.35cm}
   }
   
-\end{columns}
-
-
-\begin{columns}
-\column{0.7}
-\block{}{
-  \begin{minipage}{.05\textwidth}
-    \includegraphics[height=\textwidth]{qr-code.pdf}
-  \end{minipage}
-  \begin{minipage}{.50\textwidth}
-    Check out the full paper at \texttt{http://tiny.cc/f6x6gz}\\
-    or scan the QR code on the left! \\
-    Email \texttt{niklas.heim@aic.fel.cvut.cz}
-  \end{minipage}
-}
-\column{.3}
-\block{}{
-  \centering
-  \begin{minipage}{.04\textwidth}
-    \includegraphics[height=\textwidth]{aic-logo.png}
-  \end{minipage}
-  \hspace{.04\textwidth}
-  \begin{minipage}{.05\textwidth}
-    \includegraphics[height=\textwidth]{cvut-logo.jpeg}
-  \end{minipage}
-  \hspace{.04\textwidth}
-}
-
-
 \end{columns}
 
 \end{document}

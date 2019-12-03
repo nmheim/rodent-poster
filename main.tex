@@ -108,7 +108,7 @@
     the corresponding encodings for the weights $\bm W$, biases $\bm b$, and
     initial conditions $\bm\xi$. The Rodent reduced
     the latent space to the four truly relevant parameters.
-
+    \vspace{0.18cm}
   }
 
   \column{0.3}
@@ -173,41 +173,44 @@
     \end{equation}}
     \hspace{-.6cm}with gaussian noise $\bm{\epsilon}$, decoder
     $H(\psi(\bm\theta,\bm\xi(0)))\equiv\phi(\z)$, and $\text{dim}(\z) = m$.
-    The encoder network consists of two parts: (i) A dense network that receives
+    The encoder network consists of two parts: (i) A dense net that receives
     only a few steps of the beginning of the time series, responsible for
     predicting $\bm \xi(0)$. (ii) A (CNN) that
     predicts $\bm \theta$.  The CNN averages over the time
     dimension after the convolutions, which makes it possible to use samples of
     different length.
 
-    \textbf{Reidentification.} During reidentification we sample a batch of
-    latent codes from the encoder for each input sample.  The latent samples
+    \textbf{Reidentification:} We sample a batch of
+    latent codes from the encoder for each input.  The samples
     are used as starting points for another optimization of the reconstruction
-    error, while keeping all irrelevant parameters fixed.
+    error $R$
+    \begin{equation}
+      R = \mathrm{MSE}(\phi(\bm z) - \x),
+    \end{equation}
+    while keeping all irrelevant parameters fixed.
     On the left, four parameters, namely $W_{13}$,
-    $W_{31}$, $\xi_{1}$, and $\xi_{3}$, were found to be relevant, so only
+    $W_{31}$, $\xi_{1}$, and $\xi_{3}$ were found to be relevant, so only
     those are changing during the optimization with respect to $R$.
     This means that we stay in the identified model manifold, but are able to
     extrapolate far beyond the training range.   
-    \vspace{0.1cm}
   }
   
 \end{columns}
 
+
 \begin{columns}
-  
 \column{0.7}
 \block{}{
   \begin{minipage}{.05\textwidth}
     \includegraphics[height=\textwidth]{qr-code.pdf}
   \end{minipage}
-  \begin{minipage}{.55\textwidth}
+  \begin{minipage}{.50\textwidth}
     Check out the full paper at \texttt{http://tiny.cc/f6x6gz}\\
     or scan the QR code on the left! \\
-    Inspired by \texttt{\#betterposter} by Mike Morrison
+    Email \texttt{niklas.heim@aic.fel.cvut.cz}
   \end{minipage}
 }
-\column{0.3}
+\column{.3}
 \block{}{
   \centering
   \begin{minipage}{.04\textwidth}

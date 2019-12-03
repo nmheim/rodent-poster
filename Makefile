@@ -11,3 +11,6 @@ clean:
 
 open:
 	evince $(TARGETS) &
+
+png:
+	convert -density 200 -quality 90 main.pdf main.png

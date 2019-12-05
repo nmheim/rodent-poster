@@ -1,16 +1,3 @@
-\documentclass{standalone}
-
-\usepackage{bm}
-\usepackage{pgfplots}
-\usepackage{tikz}
-\usepackage{xcolor}
-\usepackage{charter}
-\usetikzlibrary{decorations.pathmorphing, shapes.misc, calc}
-
-\definecolor{mLightBrown}{HTML}{EB811B}
-\definecolor{mLightGreen}{HTML}{14B03D}
-
-\begin{document}
 \def\baselen{2.6cm}
 
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\baselen]
@@ -94,4 +81,3 @@
   \node[annot, below of=H-1] (pzx) {$\mathcal{N}(0, \bm \lambda_z)$};
   \node[above of=O-3] (pxz) {$\mathcal{N}(\bm x | H(\psi(\bm z)), \sigma_x)$};
 \end{tikzpicture}
-\end{document}

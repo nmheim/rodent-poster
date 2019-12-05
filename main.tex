@@ -16,14 +16,19 @@
 \colorlet{blockbodybgcolor}{mDarkTeal}
 \block{}{
   \color{white}{
-    \fontseries{l}\fontsize{125}{100}\selectfont
+    \fontseries{l}\fontsize{125}{150}\selectfont
+    Learning \textbf{physical concepts} by \\
+    \textbf{relevance determination}: Identifying \\
+    \textbf{manifolds} of \textbf{differential equations.} 
+
     % Learning \textbf{physical concepts}  purely \\\\\\
     % from data: We demonstrate how \\\\\\
     % \textbf{generative models} can learn  \\\\\\
     % \textbf{manifolds} of \textbf{differential equations.}
-    \textbf{Relevance determination} for \\\\\\ \textbf{explainability}:
-    Learning \textbf{manifolds} of \\\\\\ sparse \textbf{differential
-    equations} from \\\\\\ \textbf{partial observations}.
+
+    % \textbf{Relevance determination} for \\\\\\ \textbf{explainability}:
+    % Learning \textbf{manifolds} of \\\\\\ sparse \textbf{differential
+    % equations} from \\\\\\ \textbf{partial observations}.
   }
 }
 \colorlet{blockbodybgcolor}{white}
@@ -73,6 +78,41 @@
 
     \vspace{1cm}
     \begin{center}
+      {\huge\bf Manifold learning \& Reidentification}\\
+    \end{center}
+    \begin{tikzfigure}
+      \includegraphics[width=.50\textwidth]{single_enc_rec_noreid.pdf}
+    \end{tikzfigure}
+    Rodent reconstructions of a harmonic signal on the left. The heatmaps on
+    the right show the corresponding encodings for the weights $\bm W$, biases
+    $\bm b$, and initial conditions $\bm\xi$. The Rodent reduced the latent
+    space to the four truly relevant parameters.
+
+    \begin{tikzfigure}
+      \resizebox{.135\textwidth}{.11\textwidth}{\input{rodent_latent_w.tex}}
+      \resizebox{.075\textwidth}{.11\textwidth}{\input{rodent_latent_s.tex}}
+      \resizebox{.075\textwidth}{.11\textwidth}{\input{rodent_latent_b.tex}}
+      %\\
+      %\vspace{0.2cm}
+      \resizebox{.135\textwidth}{.11\textwidth}{\input{odent_w.tex}}
+      \resizebox{.075\textwidth}{.11\textwidth}{\input{odent_s.tex}}
+      \resizebox{.075\textwidth}{.11\textwidth}{\input{odent_b.tex}}
+      \begin{minipage}{.28\textwidth}
+        \centering
+        \tikz\draw[black,fill=mLightGreen] (0,0) circle (.4ex); {\scriptsize Rodent}
+      \end{minipage}
+      \begin{minipage}{.28\textwidth}
+        \centering
+        \tikz\draw[black,fill=mLightBrown] (0,0) circle (.4ex); {\scriptsize Odent}
+      \end{minipage}
+    \end{tikzfigure}
+    Latent codes of the Rodent compared to Odent.  All redundant parameters are
+    pushed to zero by Rodent while Odent keeps one irrelevant parameter
+    ($W_{22}$). Additionally we can see that the Rodent squeezes irrelevant
+    parameters closer to zero than Odent.
+
+    \vspace{1cm}
+    \begin{center}
       {\huge\bf Advantages of the relevant ODE identifier}\\
     \end{center}
 
@@ -97,27 +137,13 @@
     \end{minipage}
 
 
-    \vspace{1cm}
-    \begin{center}
-      {\huge\bf Manifold learning \& Reidentification}\\
-    \end{center}
-    \begin{tikzfigure}
-      \includegraphics[width=.50\textwidth]{single_enc_rec.pdf}
-    \end{tikzfigure}
-    Rodent reconstructions (left column) and latent codes (right column) of a
-    harmonic signal in the upper plots. Reidentified reconstruction and
-    encodings in the bottom.  The values of the latent codes only change were
-    the variable was detected as relevant.  The heatmaps on the right show
-    the corresponding encodings for the weights $\bm W$, biases $\bm b$, and
-    initial conditions $\bm\xi$. The Rodent reduced
-    the latent space to the four truly relevant parameters.
   }
 
 \block{}{
   \begin{minipage}{.05\textwidth}
     \includegraphics[height=\textwidth]{qr-code.pdf}
   \end{minipage}
-  \begin{minipage}{.30\textwidth}
+  \begin{minipage}{.37\textwidth}
     Check out the full paper at \texttt{http://tiny.cc/f6x6gz}\\
     or scan the QR code on the left! \\
     Email \texttt{niklas.heim@aic.fel.cvut.cz}
@@ -127,26 +153,21 @@
   \end{minipage}
   \hspace{.03\textwidth}
   \begin{minipage}{.05\textwidth}
-    \includegraphics[height=\textwidth]{avast-logo.png}
-  \end{minipage}
-  \hspace{.01\textwidth}
-  \begin{minipage}{.05\textwidth}
     \includegraphics[height=\textwidth]{cvut-logo.jpeg}
   \end{minipage}
-  \hspace{.04\textwidth}
 }
 
   \column{0.3}
   \block{Rodent in depth}{
-    \textbf{Problem definition:} Assume a time series $\X = [\bm x_1, \bm
-    x_2,\ldots, \bm x_K]$ with $\bm x_i \in \mathbb{R}^d$ generated from
-    discrete-time, noisy observations
+    \textbf{Problem definition:} We are concerned with time series $\X = [\bm
+    x_1, \bm x_2,\ldots, \bm x_K]$ with $\bm x_i \in \mathbb{R}^d$ generated
+    from discrete-time, noisy observations
     \begin{equation}
       \bm x_k = H(\bm{\xi}(\Delta t k)) + e_k,
     \end{equation}
-    where $k=1\ldots K$, $e_k \sim \N(0,\se^2\mathbf{I})$, and partial obs.
-    operator $H$.  The evolution of $\bm\xi(t) \in \mathbb{R}^N$ is governed by
-    an ODE:
+    where $k=1\ldots K$, noise $e_k \sim \N(0,\se^2\mathbf{I})$, and partial
+    observation operator $H$.  The evolution of $\bm\xi(t) \in \mathbb{R}^N$ is
+    governed by an ODE:
     \begin{align}
       \label{eq:dyn_sys}
       \frac{\partial \bm{\xi}}{\partial t} 
@@ -220,7 +241,7 @@
     This means that we stay in the identified model manifold, but are able to
     extrapolate far beyond the training range.   
 
-    \vspace{1.35cm}
+    \vspace{5.20cm}
   }
   
 \end{columns}
